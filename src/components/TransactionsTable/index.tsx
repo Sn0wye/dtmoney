@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
+import { api } from '../../services/api';
 import { Container } from './styles';
 
 export const TransactionsTable = () => {
@@ -8,7 +8,8 @@ export const TransactionsTable = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await axios.get('localhost:3000/api/transactions');
+    const { data } = await api.get('/transactions');
+    console.log(data);
     return data;
   };
 
