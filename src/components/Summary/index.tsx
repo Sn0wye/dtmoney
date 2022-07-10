@@ -10,21 +10,21 @@ export const Summary = () => {
     <Container>
       <div>
         <header>
-          <p>Entradas</p>
+          <p>Incomes</p>
           <img src={incomeImg} alt='Income icon' />
         </header>
         <strong>R$1000</strong>
       </div>
       <div>
         <header>
-          <p>Saídas</p>
+          <p>Outcomes</p>
           <img src={outcomeImg} alt='Outcome icon' />
         </header>
         <strong>- R$500</strong>
       </div>
       <div className='highlight-background'>
         <header>
-          <p>Entradas</p>
+          <p>Total</p>
           <img src={totalImg} alt='Total icon' />
         </header>
         <strong>R$500</strong>
