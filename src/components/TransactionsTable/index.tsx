@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTransactions } from '../../hooks/useTransactions';
 import { Container } from './styles';
 
