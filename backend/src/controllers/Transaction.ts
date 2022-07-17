@@ -13,7 +13,12 @@ export class TransactionController {
   }
 
   async getTransactions(req: Request, res: Response) {
-    const transactions = await prisma.transaction.findMany();
+    const { userId } = req.params;
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId,
+      },
+    });
 
     return res.status(200).json(transactions);
   }
