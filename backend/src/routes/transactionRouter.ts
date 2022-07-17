@@ -3,12 +3,17 @@ import { TransactionController } from '../controllers/Transaction';
 import { ValidateTransaction } from '../middlewares/ValidateTransaction';
 
 const transactionController = new TransactionController();
+const validateTransaction = new ValidateTransaction();
 
 export const transactionRouter = Router();
 
-transactionRouter.get('/', transactionController.getTransactions);
 transactionRouter.post(
   '/create',
-  ValidateTransaction,
+  validateTransaction.body,
   transactionController.createTransaction
+);
+transactionRouter.get(
+  '/:userId',
+  validateTransaction.userExists,
+  transactionController.getTransactions
 );
