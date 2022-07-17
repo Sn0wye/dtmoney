@@ -1,10 +1,13 @@
 import { Router } from 'express';
+import { userRouter } from './userRouter';
 
 export const indexRouter = Router();
 
 indexRouter.get('/ping', (req, res) => {
   res.status(200).json({ message: 'pong' });
 });
+
+indexRouter.use('/users', userRouter);
 
 // 404 Route
 indexRouter.use((req, res) => {
