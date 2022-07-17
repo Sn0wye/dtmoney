@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { transactionRouter } from './transactionRouter';
 import { userRouter } from './userRouter';
 
 export const indexRouter = Router();
@@ -8,6 +9,7 @@ indexRouter.get('/ping', (req, res) => {
 });
 
 indexRouter.use('/users', userRouter);
+indexRouter.use('/transactions', transactionRouter);
 
 // 404 Route
 indexRouter.use((req, res) => {
