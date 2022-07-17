@@ -1,23 +1,38 @@
 import { NextFunction, Request, Response } from 'express';
 import { transactionSchema } from '../schemas/Transaction';
-import { userExists } from '../services/userExists';
+import { UserService } from '../services/user';
 
-export const ValidateTransaction = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const data = transactionSchema.parse(req.body);
+const userService = new UserService();
 
-    const user = userExists(data.userId);
+export class ValidateTransaction {
+  async body(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = transactionSchema.parse(req.body);
 
-    if (!user) {
-      return res.status(400).json({ message: 'User does not exist' });
+      const user = userService.exists(data.userId);
+
+      if (!user) {
+        return res.status(400).json({ message: 'User does not exist' });
+      }
+
+      next();
+    } catch (err) {
+      return res.status(400).json({ error: err });
     }
-
-    next();
-  } catch (err) {
-    return res.status(400).json({ error: err });
   }
-};
+
+  async userExists(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await userService.exists(req.params.userId);
+      console.log(user);
+
+      if (!user) {
+        return res.status(400).json({ message: 'User does not exist' });
+      }
+
+      next();
+    } catch (err) {
+      return res.status(400).json({ error: err });
+    }
+  }
+}
