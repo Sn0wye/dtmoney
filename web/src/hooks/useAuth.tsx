@@ -1,7 +1,9 @@
 import {
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth';
 import {
   createContext,
@@ -24,6 +26,11 @@ type User = {
 interface UserContextType {
   user: User | null;
   signInWithGoogle: () => Promise<void>;
+  disconnect: () => Promise<void>;
+  createAccountWithEmailAndPassword: (
+    email: string,
+    password: string
+  ) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -52,7 +59,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const googleProvider = new GoogleAuthProvider();
 
   async function signInWithGoogle() {
-    console.log('Fazendo signin');
     const { user } = await signInWithPopup(auth, googleProvider);
 
     const dbUser = await backend.post('/users/create', {
@@ -61,14 +67,44 @@ export function AuthProvider({ children }: AuthProviderProps) {
       profilePic: user.photoURL,
     });
 
-    console.log(dbUser);
+    setUser(dbUser.data);
+    return;
+  }
 
+  async function disconnect() {
+    await signOut(auth);
+    setUser(null);
+  }
+
+  async function createAccountWithEmailAndPassword(
+    email: string,
+    password: string
+  ) {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const dbUser = await backend.post('/users/create', {
+      name: user.displayName,
+      id: user.uid,
+      profilePic: user.photoURL,
+    });
+
+    console.log(dbUser.data);
     setUser(dbUser.data);
     return;
   }
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        signInWithGoogle,
+        disconnect,
+        createAccountWithEmailAndPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
