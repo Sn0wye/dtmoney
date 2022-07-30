@@ -12,20 +12,33 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
 
-  button {
-    font-size: 1rem;
-    color: #fff;
-    background: var(--blue-light);
-    border: 0;
-    padding: 0 2rem;
-    border-radius: 0.25rem;
-    height: 3rem;
+export const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`;
 
-    transition: filter 0.2s;
+export const Button = styled.button`
+  font-size: 1rem;
+  color: #fff;
+  background: var(--blue-light);
+  border: 0;
+  padding: 0 2rem;
+  border-radius: 0.25rem;
+  height: 3rem;
 
-    &:hover {
-      filter: brightness(0.9);
-    }
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
   }
+`;
+
+export const ProfileAvatar = styled.button`
+  border: 0;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 100%;
 `;
