@@ -115,7 +115,7 @@ export const RegisterModal = ({
         <Register type='submit'>Register</Register>
 
         <AlreadyHaveAnAccount>
-          <p>Already have an account?</p>
+          <span>Already have an account?</span>
           <button onClick={onSwitchModalRequest}>Log in</button>
         </AlreadyHaveAnAccount>
       </Form>
