@@ -15,6 +15,7 @@ interface RegisterModalProps {
 }
 
 interface IFormInputs {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -22,6 +23,7 @@ interface IFormInputs {
 
 const registerFormSchema = z
   .object({
+    name: z.string(),
     email: z.string().email({ message: 'Email must be valid' }),
     password: z
       .string()
@@ -49,7 +51,11 @@ export const RegisterModal = ({
   });
 
   async function onSubmit(data: IFormInputs) {
-    await createAccountWithEmailAndPassword(data.email, data.password);
+    await createAccountWithEmailAndPassword(
+      data.name,
+      data.email,
+      data.password
+    );
   }
 
   return (
@@ -77,6 +83,9 @@ export const RegisterModal = ({
         <Divider>
           <span>or</span>
         </Divider>
+
+        <input placeholder='Display Name' {...register('name')} />
+        {errors.email && <p>{errors.name?.message}</p>}
 
         <input placeholder='Email' {...register('email')} />
         {errors.email && <p>{errors.email?.message}</p>}
