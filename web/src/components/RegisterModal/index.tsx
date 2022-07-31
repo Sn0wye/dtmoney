@@ -7,11 +7,18 @@ import closeImg from '../../assets/close.svg';
 import googleIcon from '../../assets/google.svg';
 import { useAuth } from '../../hooks/useAuth';
 
-import { Divider, Form, Google, Register } from './styles';
+import {
+  AlreadyHaveAnAccount,
+  Divider,
+  Form,
+  Google,
+  Register,
+} from './styles';
 
 interface RegisterModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  onSwitchModalRequest: () => void;
 }
 
 interface IFormInputs {
@@ -38,6 +45,7 @@ const registerFormSchema = z
 export const RegisterModal = ({
   isOpen,
   onRequestClose,
+  onSwitchModalRequest,
 }: RegisterModalProps) => {
   const { signInWithGoogle, createAccountWithEmailAndPassword } = useAuth();
 
@@ -105,6 +113,11 @@ export const RegisterModal = ({
         {errors.confirmPassword && <p>{errors.confirmPassword?.message}</p>}
 
         <Register type='submit'>Register</Register>
+
+        <AlreadyHaveAnAccount>
+          <p>Already have an account?</p>
+          <button onClick={onSwitchModalRequest}>Log in</button>
+        </AlreadyHaveAnAccount>
       </Form>
     </Modal>
   );

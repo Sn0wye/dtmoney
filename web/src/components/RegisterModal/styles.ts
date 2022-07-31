@@ -118,3 +118,21 @@ export const Register = styled.button`
     filter: brightness(0.9);
   }
 `;
+
+export const AlreadyHaveAnAccount = styled.div`
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  button {
+    all: unset;
+    color: var(--blue);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
