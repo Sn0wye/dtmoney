@@ -28,6 +28,7 @@ interface UserContextType {
   signInWithGoogle: () => Promise<void>;
   disconnect: () => Promise<void>;
   createAccountWithEmailAndPassword: (
+    name: string,
     email: string,
     password: string
   ) => Promise<void>;
@@ -77,6 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function createAccountWithEmailAndPassword(
+    name: string,
     email: string,
     password: string
   ) {
@@ -85,14 +87,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       email,
       password
     );
+
     const dbUser = await backend.post('/users/create', {
-      name: user.displayName,
+      name,
       id: user.uid,
       profilePic: user.photoURL,
     });
 
-    console.log(dbUser.data);
-    setUser(dbUser.data);
+    setUser(dbUser.data.user);
     return;
   }
 
