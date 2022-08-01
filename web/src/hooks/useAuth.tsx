@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
@@ -32,6 +33,7 @@ interface UserContextType {
     email: string,
     password: string
   ) => Promise<void>;
+  logInWithEmailAndPassword: (email: string, password: string) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -98,6 +100,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return;
   }
 
+  async function logInWithEmailAndPassword(email: string, password: string) {
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    console.log(user);
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -105,6 +112,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signInWithGoogle,
         disconnect,
         createAccountWithEmailAndPassword,
+        logInWithEmailAndPassword,
       }}
     >
       {children}
