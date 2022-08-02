@@ -35,24 +35,3 @@ export const Button = styled.button`
     filter: brightness(0.9);
   }
 `;
-
-export const ProfileAvatar = styled.button`
-  border: 0;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 100%;
-  color: #fff;
-  background: var(--blue-light);
-
-  transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-  }
-`;
