@@ -1,6 +1,7 @@
 import logoImg from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/useAuth';
 import { getInitials } from '../../utils/getInitials';
+import { ProfileMenu } from '../ProfileMenu';
 
 import {
   Button,
@@ -19,7 +20,8 @@ export const Header = ({
   onOpenNewTransactionModal,
   onOpenAuthModal,
 }: HeaderProps) => {
-  const { user, disconnect } = useAuth();
+  const { user } = useAuth();
+
   return (
     <Container>
       <Content>
@@ -29,13 +31,15 @@ export const Header = ({
             New Transaction
           </Button>
           {user ? (
-            <ProfileAvatar onClick={disconnect}>
-              {user?.profilePic === 'string' ? (
-                <img src={user?.profilePic} alt={user?.name} />
-              ) : (
-                <span>{getInitials(user.name)}</span>
-              )}
-            </ProfileAvatar>
+            <ProfileMenu>
+              <ProfileAvatar>
+                {user?.profilePic !== null ? (
+                  <img src={user?.profilePic} alt={user?.name} />
+                ) : (
+                  <span>{getInitials(user.name)}</span>
+                )}
+              </ProfileAvatar>
+            </ProfileMenu>
           ) : (
             <Button onClick={onOpenAuthModal}>Sign Up</Button>
           )}
